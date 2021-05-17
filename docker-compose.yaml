@@ -1,0 +1,43 @@
+version: "3"
+
+services:
+  speaker:
+    build: ./Speaker
+    ports:
+      - 4040:4040
+    environment:
+      NODE_ENV: production
+      SERVER_PORT: 4040
+    restart: always
+  listener:
+    build: ./Listener
+    ports:
+      - 5050:5050
+    environment:
+      NODE_ENV: production
+      SERVER_PORT: 5050
+    restart: always
+  kafka:
+    image: wurstmeister/kafka
+    hostname: kafka1
+    ports:
+      - "9092:9092"
+      # - "8081:8081"
+      # - "8082:8082"
+      # - "8083:8083"
+      # - "2181:2181"
+      # - "3030:3030"
+      # - "9581-9585:9581-9585"
+    environment:
+      KAFKA_PORT: 9092
+      KAFKA_CREATE_TOPICS: "cool-topic:1:1:compact"
+      KAFKA_LISTENERS: PLAINTEXT://:9092
+      KAFKA_ZOOKEEPER_CONNECT: zoo1:2181
+    depends_on:
+      - zookeeper
+  zookeeper:
+    image: zookeeper
+    restart: always
+    hostname: zoo1
+    ports:
+      - 2181:2181
