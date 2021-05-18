@@ -8,6 +8,7 @@ services:
     environment:
       NODE_ENV: production
       SERVER_PORT: 4040
+      KAFKA_TOPIC: cool-topic
     restart: always
   listener:
     build: ./Listener
@@ -16,6 +17,7 @@ services:
     environment:
       NODE_ENV: production
       SERVER_PORT: 5050
+      KAFKA_TOPIC: cool-topic
     restart: always
   kafka:
     image: wurstmeister/kafka

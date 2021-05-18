@@ -4,9 +4,11 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "node src"
+    "start": "node src -w"
   },
   "dependencies": {
+    "express": "^4.17.1",
+    "express-async-handler": "^1.1.4",
     "kafkajs": "^1.15.0"
   }
 }

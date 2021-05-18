@@ -1,6 +1,11 @@
 "use strict";
 
 const { Kafka } = require('kafkajs')
+const express = require('express')
+const asyncHandler = require('express-async-handler');
+const port = process.env.PORT || 4040;
+const topic = process.env.KAFKA_TOPIC;
+
 
 const kafka = new Kafka({
   clientId: 'my-app',
@@ -9,15 +14,25 @@ const kafka = new Kafka({
 
 const producer = kafka.producer();
 
-const run = async () => {
-  // Producing
-  await producer.connect()
-  await producer.send({
-    topic: 'cool-topic',
-    messages: [
-      { value: 'Hello KafkaJS user!' },
-    ],
-  });
-};
+const app = express()
+app.use(express.json());
+app.post('/', asyncHandler(sendMessage));
 
-run().catch(console.error);
+async function sendMessage(req, res)
+{
+  await producer.send({
+    topic: topic,
+    messages: [
+      {
+        key: 'check1234',
+        value: req.body.message
+      },
+    ]
+  });
+  res.send("posted");
+}
+
+app.listen(port, async () => {
+  console.log(`Example app listening at http://localhost:${port}`)
+  await producer.connect();
+})
