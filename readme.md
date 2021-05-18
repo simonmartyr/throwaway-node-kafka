@@ -2,6 +2,18 @@
 
 Repo to mess around with KafkaJs.
 
-## Run
+## Quick Start
 
-`docker-compose up` from root to see in action.
+Run the `docker-compose`
+
+```sh
+docker-compose up
+```
+
+### Post a message to the speaker
+
+```sh
+curl localhost:4040 -d '{"message":"hello"}' -H "Content-Type: application/json"
+```
+
+via the console, you should see your message from the listener.
