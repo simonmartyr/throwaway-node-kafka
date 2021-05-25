@@ -1,7 +1,8 @@
 "use strict";
 
+import { MessageModel } from "./message";
 const { Kafka } = require('kafkajs');
-const express = require('express');
+import express, { Request, Response } from "express";
 const asyncHandler = require('express-async-handler');
 const port = process.env.PORT || 4040;
 const topic = process.env.KAFKA_TOPIC;
@@ -18,18 +19,19 @@ const app = express();
 app.use(express.json());
 app.post('/', asyncHandler(sendMessage));
 
-async function sendMessage(req, res)
+async function sendMessage(req: Request<{}, {}, MessageModel>, res: Response)
 {
+  console.log("changed");
   await producer.send({
     topic: topic,
     messages: [
       {
         key: 'check1234',
-        value: req.body.message
-      },
+        value: req?.body.message
+      }
     ]
   });
-  res.send("posted");
+  res.send("cool");
 }
 
 app.listen(port, async () => {

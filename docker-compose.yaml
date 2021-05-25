@@ -5,6 +5,8 @@ services:
     build: ./Speaker
     ports:
       - 4040:4040
+    volumes:
+      - ./Speaker/src:/app/src
     environment:
       NODE_ENV: production
       SERVER_PORT: 4040
