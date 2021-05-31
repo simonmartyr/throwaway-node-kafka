@@ -2,7 +2,6 @@
 import { kafkaConsumer } from './config/kafka';
 const kTopic = process.env.KAFKA_TOPIC || "cool-topic";
 
-
 const run = async () => {
   kafkaConsumer(kTopic).then(({ topic, partition, message }) => {
     console.log({
