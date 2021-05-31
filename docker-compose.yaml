@@ -16,6 +16,8 @@ services:
     build: ./Listener
     ports:
       - 5050:5050
+    volumes:
+      - ./Listener/src:/app/src
     environment:
       NODE_ENV: production
       SERVER_PORT: 5050

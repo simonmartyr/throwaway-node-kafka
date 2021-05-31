@@ -1,3 +1,3 @@
 export type MessageModel = {
-  message: String
+  message: string
 }
